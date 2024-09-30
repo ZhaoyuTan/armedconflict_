@@ -1,12 +1,13 @@
 
+library(here)
+
 covariate <- read.csv(here("original", "covariates.csv"), header = TRUE)
 
-
 source(here("R", "matmor_cleandat.R"))
-source(here("R", "disaster_cleandatR"))
+source(here("R", "disaster_cleandat.R"))
 source(here("R", "conflict.R"))
 
-final <- list(conflict, jointdata, disaster_clean) %>% 
+final <- list(binary_conflict, jointdata, disaster_clean) %>% 
   reduce(full_join, by = c('ISO', 'year'))
 
 finaldata <- covariate %>% 

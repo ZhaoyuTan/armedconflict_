@@ -1,8 +1,8 @@
-maternal <- read.csv(here("original","maternalmortality.csv"),header = TRUE)
 
+library(here)
 library(tidyverse)
 
-library(usethis) 
+maternal <- read.csv(here("original","maternalmortality.csv"),header = TRUE)
 
 maternal <- maternal %>% select(Country.Name,X2000:X2019) %>% rename_at(vars(matches("X")),~str_remove(.,"X"))
 
@@ -32,11 +32,11 @@ under5 <- read.csv(here("original","infantmortality.csv"),header = TRUE)
 under5_clean <- cleandata(under5,"under5 mortality")
 
 
-
 jointdata <- list(maternal_clean,infant_clean,neonatal_clean,under5_clean) %>% reduce(full_join)
 
-install.packages("countrycode")
 library(countrycode)
+
 jointdata$ISO <- countrycode(jointdata$Country.Name,
                             origin = "country.name",
                             destination = "iso3c")
+jointdata <- jointdata %>% select(-Country.Name)

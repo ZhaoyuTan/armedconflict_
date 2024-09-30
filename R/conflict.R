@@ -1,3 +1,5 @@
+library(here)
+
 conflict <- read.csv(here("original","conflictdata.csv"), header = TRUE)
 
 binary_conflict <- conflict %>%  group_by(ISO, year) %>% 
